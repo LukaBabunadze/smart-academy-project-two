@@ -4,11 +4,9 @@ const links = [
   { name: "youtube", url: "https://youtube.com", id: 3 },
 ];
 
-const Navbar = ({ number }) => {
+const Navbar = () => {
   return (
     <section>
-      {/* {number} */}
-      {/* <br /> */}
       {links.map((link) => (
         <button key={link.id}>
           <a href={link.url}>{link.name}</a>

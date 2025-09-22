@@ -1,18 +1,36 @@
+"use client";
 import Navbar from "@/components/Navbar";
 import styles from "./page.module.css";
 import Feedback from "@/components/Feedback";
-import { PRODUCTS } from "@/lib/products_data";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const secretNumber = 1234;
-  console.log("Home component", secretNumber);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products")
+      .then((response) => response.json())
+      .then((result) => {
+        setProducts(result);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <p>products are fetching!</p>;
+  }
+
+  const handleDeleteProduct = (id) => {
+    setProducts(products.filter((prod) => prod.id !== id));
+  };
 
   return (
     <>
-      <Navbar number={secretNumber} />
+      <Navbar />
       <main className={styles.container}>
-        {PRODUCTS.map((product) => (
+        {products.map((product) => (
           <section key={product.id} className={styles.itemContainer}>
             <Image
               src={product.image}
@@ -24,7 +42,15 @@ export default function Home() {
             <p className={styles.desc}>{product.description}</p>
             <div className={styles.priceWrapper}>
               <p>${product.price}</p>
-              <button className={styles.button}>see details</button>
+              <button
+                onClick={() => console.log("clicked")}
+                className={styles.button}
+              >
+                see details
+              </button>
+              <button onClick={() => handleDeleteProduct(product.id)}>
+                Delete this product
+              </button>
             </div>
           </section>
         ))}
