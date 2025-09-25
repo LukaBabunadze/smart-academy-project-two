@@ -1,0 +1,12 @@
+.navbarContainer {
+  display: flex;
+  width: 100vw;
+  height: 50px;
+  margin: 20px 0;
+  justify-content: center;
+  gap: 20px;
+}
+
+.activeTab {
+  color: blue;
+}
