@@ -8,35 +8,42 @@ const ProductItem = ({
   setProducts,
   setDeletedProducts,
 }) => {
+  const deleteProductOnServer = async () => {
+    const response = await fetch(
+      `https://fakestoreapi.com/products/${product.id}`,
+      {
+        method: "DELETE",
+      }
+    );
+    const result = await response.json();
+    console.log("deleted product: ", response);
+  };
+
   const handleDeleteProduct = (id) => {
     setProducts(products.filter((prod) => prod.id !== id));
     setDeletedProducts((prev) => [...prev, product]);
+    deleteProductOnServer();
   };
   return (
-    <Link href={`/products/${product.id}`}>
-      <section className={styles.itemContainer}>
-        <Image
-          src={product.image}
-          width={80}
-          height={100}
-          alt={product.title}
-        />
-        <h3 className={styles.title}>{product.title}</h3>
-        <p className={styles.desc}>{product.description}</p>
-        <div className={styles.priceWrapper}>
-          <p>${product.price}</p>
+    <section className={styles.itemContainer}>
+      <Image src={product.image} width={80} height={100} alt={product.title} />
+      <h3 className={styles.title}>{product.title}</h3>
+      <p className={styles.desc}>{product.description}</p>
+      <div className={styles.priceWrapper}>
+        <p>${product.price}</p>
+        <Link href={`/products/${product.id}`}>
           <button
             onClick={() => console.log("clicked")}
             className={styles.button}
           >
             see details
           </button>
-          <button onClick={() => handleDeleteProduct(product.id)}>
-            Delete this product
-          </button>
-        </div>
-      </section>
-    </Link>
+        </Link>
+        <button onClick={() => handleDeleteProduct(product.id)}>
+          Delete this product
+        </button>
+      </div>
+    </section>
   );
 };
 

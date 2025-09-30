@@ -6,14 +6,20 @@ import ProductItem from "@/components/ProductItem";
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [deletedProducts, setDeletedProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
       .then((response) => response.json())
       .then((result) => {
         setProducts(result);
+        setLoading(false);
       });
   }, []);
+
+  if (loading) {
+    return <div>content loading</div>;
+  }
 
   return (
     <>
