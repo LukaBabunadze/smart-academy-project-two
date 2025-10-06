@@ -3,7 +3,7 @@ import Link from "next/link";
 import styles from "./Navbar.module.css";
 import { usePathname } from "next/navigation";
 const links = [
-  { name: "Products", url: "/", id: 1 },
+  { name: "Products", url: "/products", id: 1 },
   { name: "Cart", url: "/cart", id: 2 },
   { name: "Profile", url: "/profile", id: 3 },
 ];
