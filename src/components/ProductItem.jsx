@@ -1,5 +1,5 @@
 "use client";
-import styles from "@/app/page.module.css";
+import styles from "@/app/products/page.module.css";
 import Image from "next/image";
 import Link from "next/link";
 const ProductItem = ({
