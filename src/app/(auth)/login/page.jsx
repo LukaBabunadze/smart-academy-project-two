@@ -1,14 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
 import { redirect } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { updateUser } from "@/lib/slices/userSlice";
 
 const page = () => {
+  const inputRef = useRef(null);
+  const user = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+  console.log(user);
+
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,6 +33,15 @@ const page = () => {
     const result = await response.json();
 
     if (result?.token) {
+      dispatch(
+        updateUser({
+          username,
+          password,
+          email: "bekeka@gmail.com",
+          age: 20,
+          admin: true,
+        })
+      );
       redirect("/products");
     }
   };
@@ -34,6 +55,7 @@ const page = () => {
           placeholder="username"
           className={styles.input}
           onChange={(e) => setUsername(e.target.value)}
+          ref={inputRef}
         />
         <input
           placeholder="password"

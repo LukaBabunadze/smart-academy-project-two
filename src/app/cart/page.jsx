@@ -1,5 +1,22 @@
+"use client";
+
+import { useAppSelector } from "@/lib/hooks";
+
 function page() {
-  return <div>cart</div>;
+  const cart = useAppSelector((state) => state.cart);
+  return (
+    <div>
+      {cart.cartProducts.map((item) => (
+        <p>
+          {item.title}
+          <br />
+          {item.quantity}
+          <br />
+          <hr />
+        </p>
+      ))}
+    </div>
+  );
 }
 
 export default page;

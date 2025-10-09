@@ -1,10 +1,13 @@
 "use client";
+import { useAppDispatch } from "@/lib/hooks";
+import { addToCart } from "@/lib/slices/cartSlice";
 import { useParams, usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 function page() {
   const pathname = usePathname();
   const params = useParams();
+  const dispatch = useAppDispatch();
 
   const [singleProduct, setSingleProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -27,6 +30,10 @@ function page() {
     getSingleProduct();
   }, []);
 
+  const handleAddToCart = () => {
+    dispatch(addToCart(singleProduct));
+  };
+
   if (loading) {
     return <div>პროდუქტი იძებნება</div>;
   }
@@ -38,6 +45,7 @@ function page() {
       ) : (
         <div>პროდუქტი ვერ მოიძებნა</div>
       )}
+      <button onClick={handleAddToCart}>add to cart</button>
     </div>
   );
 }
