@@ -12,11 +12,10 @@ const page = () => {
   const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
-  console.log(user);
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("m38rmF$");
 
   useEffect(() => {
     inputRef.current.focus();
@@ -33,15 +32,16 @@ const page = () => {
     const result = await response.json();
 
     if (result?.token) {
-      dispatch(
-        updateUser({
-          username,
-          password,
-          email: "bekeka@gmail.com",
-          age: 20,
-          admin: true,
-        })
-      );
+      // dispatch(
+      //   updateUser({
+      //     username,
+      //     password,
+      //     email: "bekeka@gmail.com",
+      //     age: 20,
+      //     admin: true,
+      //   })
+      // );
+      localStorage.setItem("token", JSON.stringify(result.token));
       redirect("/products");
     }
   };
@@ -62,13 +62,15 @@ const page = () => {
           type={passwordVisible ? "text" : "password"}
           className={styles.input}
           onChange={(e) => setPassword(e.target.value)}
+          value={password}
         />
-        <button
+        {/* <button
           className={styles.button}
           onClick={() => setPasswordVisible(!passwordVisible)}
+          type="button"
         >
           see password
-        </button>
+        </button> */}
         <button className={styles.button} type="submit">
           Sign In
         </button>

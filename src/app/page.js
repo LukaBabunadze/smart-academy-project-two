@@ -1,16 +1,21 @@
 "use client";
 
 import { redirect } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  useEffect(() => {
-    let userIsAuthorized = false;
-    if (userIsAuthorized) {
+  const checkUser = () => {
+    const res = localStorage.getItem("token");
+    const userToken = JSON.parse(res);
+    if (userToken) {
       redirect("/products");
     } else {
       redirect("/login");
     }
+  };
+
+  useEffect(() => {
+    checkUser();
   }, []);
   return <div>Home Page</div>;
 }

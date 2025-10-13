@@ -1,3 +1,4 @@
+import Logout from "@/components/Logout";
 import Image from "next/image";
 
 const page = async () => {
@@ -11,6 +12,7 @@ const page = async () => {
       <p>{user.phone}</p>
       <p>{user.email}</p>
       <p>{user.address.city}</p>
+      <Logout />
     </div>
   );
 };
